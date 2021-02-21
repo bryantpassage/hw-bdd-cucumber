@@ -42,5 +42,8 @@ end
 
 Then /I should see all the movies/ do
   # Make sure that all the movies in the app are visible in the table
-  fail "Unimplemented"
+  # use page from capybara and expect from rspec
+  # contains css element table#movies tbody tr and checks whether tr occurs a number of times
+  expect(page).to have_css('table#movies tbody tr', count: Movie.count)
+  # fail "Unimplemented"
 end
