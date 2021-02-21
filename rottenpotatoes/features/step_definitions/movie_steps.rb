@@ -4,8 +4,9 @@ Given /the following movies exist/ do |movies_table|
   movies_table.hashes.each do |movie|
     # each returned element will be a hash whose key is the table header.
     # you should arrange to add that movie to the database here.
+    Movie.create!(movie)
   end
-  fail "Unimplemented"
+  # fail "Unimplemented"
 end
 
 Then /(.*) seed movies should exist/ do | n_seeds |
@@ -25,11 +26,18 @@ end
 #  "When I uncheck the following ratings: PG, G, R"
 #  "When I check the following ratings: G"
 
-When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
+When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list| #uncheck = nil if (un)? is false
   # HINT: use String#split to split up the rating_list, then
   #   iterate over the ratings and reuse the "When I check..." or
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
-  fail "Unimplemented"
+  rating_list.split(/, \s*/).each {|rating| #, one or more spaces characters
+    if uncheck
+      uncheck("ratings_#{rating}") # checkboxes id = ratings_G
+    else
+      check("ratings_#{rating}")
+    end
+  }
+  # fail "Unimplemented"
 end
 
 Then /I should see all the movies/ do
