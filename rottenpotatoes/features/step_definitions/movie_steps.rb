@@ -19,7 +19,10 @@ end
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
-  fail "Unimplemented"
+  # using regexp, make sure that e1 occurs before e2 in page.body
+  str_exp = /#{e1}.*#{e2}/m
+  expect(page.body).to match(str_exp)
+  # fail "Unimplemented"
 end
 
 # Make it easier to express checking or unchecking several boxes at once
@@ -34,7 +37,7 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list| #unche
     if uncheck
       uncheck("ratings_#{rating}") # checkboxes id = ratings_G
     else
-      check("ratings_#{rating}")
+      check("ratings_#{rating}")    # use #{} to evauluate variable as string
     end
   }
   # fail "Unimplemented"
